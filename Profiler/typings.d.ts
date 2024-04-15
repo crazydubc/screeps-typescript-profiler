@@ -1,24 +1,25 @@
 interface Memory {
   profiler: ProfilerMemory;
 }
-
 interface ProfilerMemory {
-  data: { [name: string]: ProfilerData };
-  start?: number;
-  total: number;
+	data: { [name: string | symbol]: ProfilerData };
+	start?: number;
+	end?: number;
+	total: number;
 }
 
 interface ProfilerData {
-  calls: number;
-  time: number;
+	calls: number;
+	time: number;
 }
 
-interface Profiler {
+interface IProfiler {
   clear(): void;
   output(): void;
-  start(): void;
+  start(time: number | undefined): void;
   status(): void;
   stop(): void;
+  finish(): void;
+  help(): void;
+  endTick(): void;
 }
-
-declare const __PROFILER_ENABLED__: boolean;

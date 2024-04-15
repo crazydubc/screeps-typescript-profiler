@@ -1,8 +1,10 @@
 # screeps-typescript-profiler
 > A light-weight TypeScript profiler for tagging classes and methods
 
-
+https://github.com/crazydubc/screeps-typescript-profiler
 This project is made as a lightweight alternative to [screeps-profiler](https://github.com/gdborton/screeps-profiler)
+
+Forked from https://github.com/screepers/screeps-typescript-profiler
 
 #### Example Output:
 ```
@@ -49,6 +51,9 @@ DesirePathProcess:findRoad                       14      0.82ms        0.05     
   import * as Profiler from "./path/to/Profiler";
 
   global.Profiler = Profiler.init();
+
+  //end of your main loop if desired.
+  global.Profiler.endTick(); //this allows for automatic displaying of data after profiling is finished.
   ```
 
 - In any module you wish to profile, import the decorator, and either tag the class to profile everything, or tag specific class methods.  (Getters and Setters are specifically disabled to not interfere with other commonly used decorators)
@@ -70,7 +75,7 @@ DesirePathProcess:findRoad                       14      0.82ms        0.05     
   }
   ```
   
-- The script also expects a global constant `__PROFILER_ENABLED__` to be set.  This is meant to be configured by build scripts.  If this value is set to `false`, **Profiler** will be completely disabled on the build.
+- The script also expects a global constant `USE_SCREEPS_PROFILER` to be set.  This is meant to be configured by build scripts.  If this value is set to `false`, **Profiler** will be completely disabled on the build.
 
 ## Usage
 
@@ -82,10 +87,12 @@ From the command line:
 
 > *(The profiler is hardcoded to write data to `Memory.profiler`, so make sure you aren't already using this location)*
 
-**`Profiler.start()`** - Starts the profiler
+**`Profiler.start(number)`** - Starts the profiler, if a number is specified, it will run for that many ticks.
 
 **`Profiler.stop()`** - Stops/Pauses the profiler
 
 **`Profiler.status()`** - Returns whether is profiler is currently running or not
 
 **`Profiler.output()`** - Pretty-prints the collected profiler data to the console
+
+**`Profiler.finish()`** - Stops profiling, outputs, and then clears the memory.
